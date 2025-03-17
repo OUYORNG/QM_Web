@@ -18,20 +18,22 @@ import { GetFavoriteQuote ,deleteFavoriteQuote } from "@/app/store/quoteSlice";
 
 export default function App() {
   const dispatch = useDispatch<AppDispatch>();
-  const { quotes, status, token, last_page } = useSelector((state: RootState) => state.quotes);
+  const { quotes, status, last_page } = useSelector((state: RootState) => state.quotes);
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
 
   useEffect(() => {
+    const token = localStorage.getItem('token')
+    
     if (token) {
       dispatch(GetFavoriteQuote({ token }));
     }
-  }, [dispatch, token]);
+  }, [dispatch]);
 
-  useEffect(() => {
-    console.log("Updated quotes state:", quotes);
-    console.log("Last page:", last_page);
-  }, [quotes, last_page]); 
+  // useEffect(() => {
+  //   console.log("Updated quotes state:", quotes);
+  //   console.log("Last page:", last_page);
+  // }, [quotes, last_page]); 
 
   const pages = last_page;
 
@@ -43,6 +45,7 @@ export default function App() {
   }, [page, quotes]);
 
   const handleDelete = (id: number) => {
+    const token = localStorage.getItem('token')
     if (token) {
       dispatch(deleteFavoriteQuote({ id, token }));
     } else {

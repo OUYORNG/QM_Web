@@ -15,10 +15,10 @@ export default function QuoteCard() {
   const { quote, status, error } = useSelector((state: RootState) => state.quotes);
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
-  const [token, setToken] = useState('1|AW1W6RhfzUdxHwxbZlbhL1n6EEbECdIz5HCI6UEP761b122a')
   const dispatch = useDispatch<AppDispatch>();
-
+  
   const handleSaveQuote = () => {
+    const token = localStorage.getItem('token')
     if (content && author && token && !isFollowed) {
       dispatch(saveQuote({ content, author, token }));
     }

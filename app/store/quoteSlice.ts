@@ -14,7 +14,6 @@ interface QuoteState {
   quotes: Quote[];
   last_page: number;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  token: string | null;
   error: string | null;
 }
 
@@ -27,7 +26,6 @@ const initialState: QuoteState = {
   last_page: 0,
   quotes: [],
   status: 'idle',
-  token: API_TOKEN,
   error: null,
 };
 
@@ -107,7 +105,7 @@ export const GetFavoriteQuote = createAsyncThunk<
       }
 
       const data = await response.json();
-      console.log('Fetched favorite quotes:', data);
+      // console.log('Fetched favorite quotes:', data);
       return { quotes: data.quotes.data as Quote[], last_page: data.quotes.last_page };
     } catch (error: any) {
       console.error('Error fetching favorite quotes:', error.message);
@@ -155,7 +153,6 @@ const quoteSlice = createSlice({
       state.status = 'idle';
       state.error = null;
       state.last_page = 0;
-      state.token = null;
     },
   },
   extraReducers: (builder) => {
